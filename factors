@@ -1,30 +1,28 @@
-#!/usr/bin/python3
-from sys import argv
-import math
+#!/usr/bin/env bash
+# Efficient factors challenge
 
-def factorize(n):
-    i = 2
+check_factor() {
+    num1=$2
+    num2=$3
 
-    if n < 2:
-        return
-    print()
-    print(n, "<- Value before")
-    while n & i:
-        i += 1
-    print("{:.0f}={:.0f}*{:.0f}".format(n, n / i, i))
-    print(n, "<- Value After")
-    print()
+    if ((num2 > num1)); then
+        tmp=$num1
+        num1=$num2
+        num2=$tmp
+    fi
 
-if len(argv) != 2:
-    exit()
+    echo "$1=$num1*$num2"
+}
 
-try:
-    with open(argv[1]) as my_file:
-            x = my_file.readline()
+while read -r i; do
+    result=$(factor "$i")
+    factors=($result)
+    
+    if (( ${#factors[@]} >= 2 )); then
+        check_factor "$i" "${factors[-2]}" "${factors[-1]}"
+    else
+        echo "Error: Unable to factorize $i"
+    fi
 
-            while x != "":
-                n = int(x.split('\n')[0])
-                factorize(n)
-                x = my_file.readline()
-except:
-    pass
+done < "$1"
+
