@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# Function to check and print factorization
 
+# Function to check and print factorization
+# Arguments: $1 - original number, $2 - first factor, $3 - second factor
 check_factor() {
     num1=$2
     num2=$3
@@ -21,7 +22,7 @@ while read -r i; do
     # Use the 'factor' command to get factors of the current number
     result=$(factor "$i")
     factors=($result)
-    
+
     # Check if at least two factors are found
     if (( ${#factors[@]} >= 2 )); then
         # Call the check_factor function to print the factorization
