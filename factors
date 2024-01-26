@@ -1,33 +1,30 @@
 #!/usr/bin/python3
-
-import sys
+from sys import argv
+import math
 
 def factorize(n):
-    factors = []
-    i = 2
-    while i * i <= n:
-        if n % i:
-            i += 1
-        else:
-            n //= i
-            factors.append(i)
-    if n > 1:
-        factors.append(n)
-    return factors
+    if n % 2 == 0:
+        i = 2
+        print("{}={}*{}".format(n, int(n//i), i))
+    else:
+        sqr = int(math.sqrt(n)) + 1
+        for i in range(3, sqr, +2):
+            if n % i == 0 :
+                print("{}={}*{}".format(n, int(n//i), i))
+                return
+            if n % (sqr + i) == 0:
+                print("{}={}*{}".format(n, sqr + i, int(n//(sqr + i))))
+                return
+            if n % (sqr - i) == 0:
+                print("{}={}*{}".format(n, sqr - 1, int(n//(sqr - i))))
+                return
 
-def main():
-    if len(sys.argv) != 2:
-        print("Usage: factors <file>")
-        sys.exit(1)
+def factor(fn):
 
-    input_file = sys.argv[1]
-
-    with open(input_file, 'r') as file:
-        for line in file:
-            num = int(line.strip())
-            factors = factorize(num)
-            print(f"{num}={'*'.join(map(str, factors))}")
+    with open(fn, encoding="utf-8") as my_file:
+        for i in my_file.readlines():
+            x = int(i)
+            result = factorize(x)
 
 if __name__ == "__main__":
-    main()
-
+    factor(argv[1])
