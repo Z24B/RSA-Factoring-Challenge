@@ -1,26 +1,33 @@
 #!/usr/bin/env bash
-# Efficient factors challenge
+# Function to check and print factorization
 
 check_factor() {
     num1=$2
     num2=$3
 
+    # Swap if necessary to ensure num1 is greater than or equal to num2
     if ((num2 > num1)); then
         tmp=$num1
         num1=$num2
         num2=$tmp
     fi
 
+    # Print factorization
     echo "$1=$num1*$num2"
 }
 
+# Main loop to read numbers from the input file
 while read -r i; do
+    # Use the 'factor' command to get factors of the current number
     result=$(factor "$i")
     factors=($result)
     
+    # Check if at least two factors are found
     if (( ${#factors[@]} >= 2 )); then
+        # Call the check_factor function to print the factorization
         check_factor "$i" "${factors[-2]}" "${factors[-1]}"
     else
+        # Print an error message if factorization is not successful
         echo "Error: Unable to factorize $i"
     fi
 
